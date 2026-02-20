@@ -1,0 +1,23 @@
+def solution(genres, plays):
+    answer = []
+    bucketlist = {}
+    for i in range(len(plays)):
+        genre = genres[i]
+        if genre not in bucketlist:
+            bucketlist[genres[i]] = {"total": plays[i], "list":[(plays[i], i), (0, -1)]}
+        else:
+            bucketlist[genre]["total"] += plays[i]
+            if bucketlist[genre]["list"][1][0] < plays[i]:
+                if bucketlist[genre]["list"][0][0] < plays[i]:
+                    bucketlist[genre]["list"][1] =  bucketlist[genre]["list"][0]
+                    bucketlist[genre]["list"][0] = (plays[i],i)
+                else:
+                    bucketlist[genre]["list"][1] = (plays[i],i)
+    sorted_by_genre = sorted(bucketlist.items(), key=lambda x: x[1]["total"], reverse=True)
+    for genre, data in sorted_by_genre:
+        for play, idx in data["list"]:
+            if idx != -1:
+                answer.append(idx)
+                    
+    
+    return answer
