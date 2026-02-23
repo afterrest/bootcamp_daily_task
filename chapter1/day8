@@ -1,0 +1,27 @@
+from collections import deque
+
+def solution(n, edge):
+    graph = [[] for _ in range(n + 1)]
+    for u, v in edge:
+        graph[u].append(v)
+        graph[v].append(u)
+    answer = 0
+    visit = set([1])
+    queue = deque([1])
+    level_count = 1
+    answer_count = 0
+    while queue:
+        print(f"level count: {answer_count}")
+        answer = answer_count
+        answer_count = 0
+        for _ in range(level_count):
+            node = queue.popleft()
+            for neighbor in graph[node]:
+                if neighbor not in visit:
+                    queue.append(neighbor)
+                    visit.add(neighbor)
+                    answer_count += 1
+        level_count = len(queue)
+        print(queue)
+        
+    return answer
