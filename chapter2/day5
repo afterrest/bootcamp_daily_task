@@ -1,0 +1,17 @@
+def solution(n, times):
+    left = 0
+    right = n * max(times)
+    times.sort()
+    while left <= right:
+        mid = (left+right)//2
+        total_people = 0
+        for t in times:
+            total_people += mid//t
+            if total_people >= n:
+                break
+        if total_people >=n:
+            right = mid - 1
+        else:
+            left = mid + 1
+
+    return left
